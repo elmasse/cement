@@ -1,0 +1,21 @@
+{
+  "name": "cement",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/cement",
+  "scripts": {
+    "dist-cement": "browserify  -r ./lib/cement.js  -o dist/cement.js",
+    "dist-element": "browserify -x ./lib/cement.js src/my-element.js -o dist/my-element.js",
+    "dist-all": "npm run dist-cement && npm run dist-element",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cocktail": "^0.6.0",
+    "cocktail-trait-advisable": "git://github.com/CocktailJS/lab-trait-advisable.git"
+  },
+  "devDependencies": {
+    "browserify": "^6.3.3"
+  }
+}
