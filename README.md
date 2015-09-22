@@ -1,10 +1,12 @@
 # CementJS
 
+## WebComponent + ES{7|Next|Hopefully|Maybe} decorators helpers
+This code uses Babel to transpile some *possible* features in ESNext aka decorators and bindings.
 
 ## Example code
 > src/my-element.js
 
-```
+```js
 
 import { component, template, onAttributeChange } from '../lib/cement';
 
@@ -45,3 +47,6 @@ $ npm install
 $ npm run dist
 $ open example/index.html
 ```
+
+## WebComponents
+This library runs on top of `webcomponents.js`. That means that browser support is tied to it.
