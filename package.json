@@ -4,18 +4,19 @@
   "description": "",
   "main": "lib/cement",
   "scripts": {
-    "dist-cement": "browserify  -r ./lib/cement.js  -o dist/cement.js",
-    "dist-element": "browserify -x ./lib/cement.js src/my-element.js -o dist/my-element.js",
-    "dist-all": "npm run dist-cement && npm run dist-element",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dist": "browserify -t [ babelify ] src/my-element.js -o dist/my-element.js"
   },
   "author": "",
   "license": "MIT",
-  "dependencies": {
-    "cocktail": "^0.6.0",
-    "cocktail-trait-advisable": "git://github.com/CocktailJS/lab-trait-advisable.git"
-  },
   "devDependencies": {
-    "browserify": "^6.3.3"
+    "babel": "^5.8.23",
+    "babel-eslint": "^4.1.3",
+    "babelify": "^6.3.0",
+    "browserify": "^11.1.0",
+    "eslint": "^1.5.0",
+    "webcomponents.js": "^0.7.2"
+  },
+  "dependencies": {
+    "traits-decorator": "^1.0.1"
   }
 }

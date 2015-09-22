@@ -2,13 +2,10 @@
 <html>
 <head>
   <title>testing cement</title>
-   <!-- W3C Custom Elements -->
-  <script src="../dist/document-register-element.js"></script>
-  <!-- cement -->
-  <script src="../dist/cement.js"></script>
-  <!-- custom elements -->
+  
+  <script src="js/webcomponents.min.js"></script>
+  
   <script src="../dist/my-element.js"></script>
-
 </head>
 <body>
 
@@ -17,12 +14,50 @@
   <p>
     This is a text on top of the custom element 
   </p>
-
-  <my-element></my-element>
-  
+  <p class="custom">
+    <my-element prop="value 1"></my-element>
+    <my-element prop="value 2"></my-element>
+    <my-element prop="value 3"></my-element>
+  </p>
   <p>
     This is a text below of the custom element        
   </p>    
+
+  <button type="button" name="change"> Change prop in random my-element </button>
+  <button type="button" name="append"> Append a new Element </button>
+
+  <script type="text/javascript">
+    
+    function changePropertyProp() {
+      var list = document.querySelectorAll('my-element'),
+          l = list.length,
+          i = Math.floor(Math.random() * 100 ) % l;
+
+        list[i].setAttribute('prop', randomText())
+    }
+
+    function appendElement () {
+      var el = document.createElement('my-element');
+      el.setAttribute('prop', 'created');
+
+      document.querySelector('.custom').appendChild(el);
+    }
+
+    function randomText () {
+      return Math.random().toString(36).substring(7);
+    }
+
+
+    document
+      .querySelector('button[name="change"]')
+      .onclick = changePropertyProp;
+
+    document
+      .querySelector('button[name="append"]')
+      .onclick = appendElement;
+
+
+  </script>
 
 </body>
 </html>

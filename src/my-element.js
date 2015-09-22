@@ -1,30 +1,30 @@
-'use strict';
 
-var cement  = require('../lib/cement');
+import { component, template, onAttributeChange, styles } from '../lib/cement';
 
-cement.mix({
-    '@element'   : 'my-element',
-    '@prototype' : HTMLElement,
 
-    '@delegates' : {
-        'h1': {
-            click: 'onMessageClick'
-        }
-    },
+@component('my-element')
+class MyElement extends HTMLElement {
 
-    createdCallback: function () {
-        var me = this;
+    @template render() {
+        const prop = this.getAttribute('prop');
 
-        me.innerHTML = "<h1>Hello</h1>";
-    },
-
-    onMessageClick: function () {
-        var h1 = this.querySelector('h1'),
-            color = "#"+((1<<24)*Math.random()|0).toString(16);
-
-        h1.style.backgroundColor = color;
-        console.log('message click');
+        return `
+            <style>
+                :host {
+                    display: block;
+                }
+            </style>
+            <div>
+                MY ELEMENT FROM RENDER() <span class="prop">${prop}</span>
+            </div>
+        `;
     }
 
+    @onAttributeChange('prop') updateProp(oldVal, newVal) {
+        const root = this.shadowRoot;
+        root.querySelector(`.prop`).innerHTML = newVal ;
+    }
 
-});
+}
+
+export default MyElement;
