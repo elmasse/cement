@@ -44,7 +44,7 @@ class MyElement extends HTMLElement {
 
 ```
 $ npm install
-$ npm run dist
+$ npm run example
 $ open example/index.html
 ```
 

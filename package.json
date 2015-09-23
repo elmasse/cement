@@ -4,7 +4,7 @@
   "description": "",
   "main": "lib/cement",
   "scripts": {
-    "dist": "browserify -t [ babelify ] src/my-element.js -o dist/my-element.js"
+    "example": "browserify -t [ babelify ] src/my-element.js -o dist/my-element.js"
   },
   "author": "",
   "license": "MIT",
