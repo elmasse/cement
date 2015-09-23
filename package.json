@@ -2,9 +2,10 @@
   "name": "cement",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/cement",
+  "main": "dist/cement",
   "scripts": {
-    "example": "browserify -t [ babelify ] src/my-element.js -o dist/my-element.js"
+    "dist": "browserify -t [ babelify ] src/cement.js -o dist/cement.js",
+    "example": "browserify -t [ babelify ] example/src/my-element.js -o example/dist/my-element.js"
   },
   "author": "",
   "license": "MIT",

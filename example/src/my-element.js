@@ -1,5 +1,5 @@
 
-import { component, template, onAttributeChange } from '../lib/cement';
+import { component, template, onAttributeChange } from '../../src/cement';
 
 
 @component('my-element')
