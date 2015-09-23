@@ -4,7 +4,7 @@
 This code uses Babel to transpile some *possible* features in ESNext aka decorators and bindings.
 
 ## Example code
-> exmaple/src/my-element.js
+> example/src/my-element.js
 
 ```js
 
