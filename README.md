@@ -68,7 +68,7 @@ Registers the target class as a custom element using the `elementName`.
 > Usage
 
 ```js
-import {register} from 'cement';
+import { register } from 'cement';
 
 @register('my-custom-element')
 class MyCustomElement extends HTMLElement { 
@@ -87,7 +87,7 @@ Registers the target class as a custom element using the `elementName` using `@r
 > Usage
 
 ```js
-import {component} from 'cement';
+import { component } from 'cement';
 
 @component('my-custom-element')
 class MyCustomElement extends HTMLElement { ... }
@@ -103,14 +103,14 @@ It **requires** the class to be decorated with `@component`
 > Usage
 
 ```js
-import {component, template} from 'cement';
+import { component, template } from 'cement';
 
 @component('my-custom-element')
 class MyCustomElement extends HTMLElement { 
     ...
 
     @template
-    innerContent { 
+    innerContent() { 
         return `<div>This is my content!</div>`;
     }
 }
@@ -125,7 +125,7 @@ It **requires** the class to be decorated with `@component`
 > Usage
 
 ```js
-import {component, attributeChange} from 'cement';
+import { component, attributeChange } from 'cement';
 
 @component('my-custom-element')
 class MyCustomElement extends HTMLElement { 
