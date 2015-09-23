@@ -1,30 +1,13 @@
 
-import { traits, requires } from 'traits-decorator';
+import { traits } from 'traits-decorator';
 
 import { TEMPLATE, ATTR_CHANGED_MAP } from './constants';
 
+import attributeChangedCallback from './traits/attributeChanged';
+import createdCallback          from './traits/created';
 
-class TemplateOnCreated {
-    @requires('Symbol(TEMPLATE):function')
-    createdCallback () {
-        const me        = this,
-              template  = me[TEMPLATE] || function() {};
 
-        me.createShadowRoot().innerHTML = me::template();
-    }    
-}
-
-class AttributeChangedHandler {
-    @requires('Symbol(ATTR_CHANGED_MAP):function')
-    attributeChangedCallback (attrName, oldVal, newVal) {
-        const me = this,
-              handler = me[ATTR_CHANGED_MAP][attrName];
-        if (handler && me[handler]) {
-            me[handler](oldVal, newVal);
-        }
-    }
-}
-
+// --- DECORATORS ----
 
 export function register (element) {
     return function (target) {
@@ -34,15 +17,13 @@ export function register (element) {
 
 export function component (element) {
     return function(target) {
-        
         traits(
-            TemplateOnCreated,
-            AttributeChangedHandler
+            createdCallback,
+            attributeChangedCallback
         )(target);
         register(element)(target);
     };
 }
-
 
 export function template (target, name, descriptor) {
     Object.defineProperty(
@@ -54,7 +35,6 @@ export function template (target, name, descriptor) {
     );
 };
 
-
 export function onAttributeChange (attrName) {
     return function (target, name, descriptor) {
         let map = target[ATTR_CHANGED_MAP];
@@ -65,3 +45,11 @@ export function onAttributeChange (attrName) {
         map[attrName] = name;
     }
 }
+
+// ---
+
+export function select (selector) {
+    const root = this.shadowRoot;
+    return root.querySelector(selector);
+}
+

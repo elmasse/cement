@@ -1,5 +1,5 @@
 
-import { component, template, onAttributeChange } from '../../src/cement';
+import { component, template, onAttributeChange, select } from '../../src/cement';
 
 
 @component('my-element')
@@ -21,8 +21,7 @@ class MyElement extends HTMLElement {
     }
 
     @onAttributeChange('prop') updateProp(oldVal, newVal) {
-        const root = this.shadowRoot;
-        root.querySelector(`.prop`).innerHTML = newVal ;
+        this::select(`.prop`).innerHTML = newVal ;
     }
 
 }

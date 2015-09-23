@@ -223,57 +223,27 @@ Object.defineProperty(exports, '__esModule', {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _createDecoratedClass = (function () { function defineProperties(target, descriptors, initializers) { for (var i = 0; i < descriptors.length; i++) { var descriptor = descriptors[i]; var decorators = descriptor.decorators; var key = descriptor.key; delete descriptor.key; delete descriptor.decorators; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor || descriptor.initializer) descriptor.writable = true; if (decorators) { for (var f = 0; f < decorators.length; f++) { var decorator = decorators[f]; if (typeof decorator === 'function') { descriptor = decorator(target, key, descriptor) || descriptor; } else { throw new TypeError('The decorator for method ' + descriptor.key + ' is of the invalid type ' + typeof decorator); } } if (descriptor.initializer !== undefined) { initializers[key] = descriptor; continue; } } Object.defineProperty(target, key, descriptor); } } return function (Constructor, protoProps, staticProps, protoInitializers, staticInitializers) { if (protoProps) defineProperties(Constructor.prototype, protoProps, protoInitializers); if (staticProps) defineProperties(Constructor, staticProps, staticInitializers); return Constructor; }; })();
-
 exports.register = register;
 exports.component = component;
 exports.template = template;
 exports.onAttributeChange = onAttributeChange;
+exports.select = select;
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _traitsDecorator = require('traits-decorator');
 
 var _constants = require('./constants');
 
-var TemplateOnCreated = (function () {
-    function TemplateOnCreated() {
-        _classCallCheck(this, TemplateOnCreated);
-    }
+var _traitsAttributeChanged = require('./traits/attributeChanged');
 
-    _createDecoratedClass(TemplateOnCreated, [{
-        key: 'createdCallback',
-        decorators: [(0, _traitsDecorator.requires)('Symbol(TEMPLATE):function')],
-        value: function createdCallback() {
-            var me = this,
-                template = me[_constants.TEMPLATE] || function () {};
+var _traitsAttributeChanged2 = _interopRequireDefault(_traitsAttributeChanged);
 
-            me.createShadowRoot().innerHTML = template.call(me);
-        }
-    }]);
+var _traitsCreated = require('./traits/created');
 
-    return TemplateOnCreated;
-})();
+var _traitsCreated2 = _interopRequireDefault(_traitsCreated);
 
-var AttributeChangedHandler = (function () {
-    function AttributeChangedHandler() {
-        _classCallCheck(this, AttributeChangedHandler);
-    }
-
-    _createDecoratedClass(AttributeChangedHandler, [{
-        key: 'attributeChangedCallback',
-        decorators: [(0, _traitsDecorator.requires)('Symbol(ATTR_CHANGED_MAP):function')],
-        value: function attributeChangedCallback(attrName, oldVal, newVal) {
-            var me = this,
-                handler = me[_constants.ATTR_CHANGED_MAP][attrName];
-            if (handler && me[handler]) {
-                me[handler](oldVal, newVal);
-            }
-        }
-    }]);
-
-    return AttributeChangedHandler;
-})();
+// --- DECORATORS ----
 
 function register(element) {
     return function (target) {
@@ -283,8 +253,7 @@ function register(element) {
 
 function component(element) {
     return function (target) {
-
-        (0, _traitsDecorator.traits)(TemplateOnCreated, AttributeChangedHandler)(target);
+        (0, _traitsDecorator.traits)(_traitsCreated2['default'], _traitsAttributeChanged2['default'])(target);
         register(element)(target);
     };
 }
@@ -306,7 +275,14 @@ function onAttributeChange(attrName) {
     };
 }
 
-},{"./constants":3,"traits-decorator":1}],3:[function(require,module,exports){
+// ---
+
+function select(selector) {
+    var root = this.shadowRoot;
+    return root.querySelector(selector);
+}
+
+},{"./constants":3,"./traits/attributeChanged":4,"./traits/created":5,"traits-decorator":1}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -317,4 +293,59 @@ exports.TEMPLATE = TEMPLATE;
 var ATTR_CHANGED_MAP = Symbol['for']('__ATTR_CHANGED__');
 exports.ATTR_CHANGED_MAP = ATTR_CHANGED_MAP;
 
-},{}]},{},[2]);
+},{}],4:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+function _createDecoratedObject(descriptors) { var target = {}; for (var i = 0; i < descriptors.length; i++) { var descriptor = descriptors[i]; var decorators = descriptor.decorators; var key = descriptor.key; delete descriptor.key; delete descriptor.decorators; descriptor.enumerable = true; descriptor.configurable = true; if ('value' in descriptor || descriptor.initializer) descriptor.writable = true; if (decorators) { for (var f = 0; f < decorators.length; f++) { var decorator = decorators[f]; if (typeof decorator === 'function') { descriptor = decorator(target, key, descriptor) || descriptor; } else { throw new TypeError('The decorator for method ' + descriptor.key + ' is of the invalid type ' + typeof decorator); } } } if (descriptor.initializer) { descriptor.value = descriptor.initializer.call(target); } Object.defineProperty(target, key, descriptor); } return target; }
+
+var _traitsDecorator = require('traits-decorator');
+
+var _constants = require('../constants');
+
+var attributeChangedCallback = _createDecoratedObject([{
+    key: 'attributeChangedCallback',
+    decorators: [(0, _traitsDecorator.requires)('Symbol(ATTR_CHANGED_MAP):{Function}')],
+    value: function attributeChangedCallback(attrName, oldVal, newVal) {
+        var me = this,
+            handler = me[_constants.ATTR_CHANGED_MAP][attrName];
+        if (handler && me[handler]) {
+            me[handler](oldVal, newVal);
+        }
+    }
+}]);
+
+exports['default'] = attributeChangedCallback;
+module.exports = exports['default'];
+
+},{"../constants":3,"traits-decorator":1}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+function _createDecoratedObject(descriptors) { var target = {}; for (var i = 0; i < descriptors.length; i++) { var descriptor = descriptors[i]; var decorators = descriptor.decorators; var key = descriptor.key; delete descriptor.key; delete descriptor.decorators; descriptor.enumerable = true; descriptor.configurable = true; if ('value' in descriptor || descriptor.initializer) descriptor.writable = true; if (decorators) { for (var f = 0; f < decorators.length; f++) { var decorator = decorators[f]; if (typeof decorator === 'function') { descriptor = decorator(target, key, descriptor) || descriptor; } else { throw new TypeError('The decorator for method ' + descriptor.key + ' is of the invalid type ' + typeof decorator); } } } if (descriptor.initializer) { descriptor.value = descriptor.initializer.call(target); } Object.defineProperty(target, key, descriptor); } return target; }
+
+var _traitsDecorator = require('traits-decorator');
+
+var _constants = require('../constants');
+
+var createdCallback = _createDecoratedObject([{
+    key: 'createdCallback',
+    decorators: [(0, _traitsDecorator.requires)('Symbol(TEMPLATE):{Function}')],
+    value: function createdCallback() {
+        var me = this,
+            template = me[_constants.TEMPLATE] || function () {};
+
+        me.createShadowRoot().innerHTML = template.call(me);
+    }
+}]);
+
+exports['default'] = createdCallback;
+module.exports = exports['default'];
+
+},{"../constants":3,"traits-decorator":1}]},{},[2]);

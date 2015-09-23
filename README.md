@@ -4,11 +4,11 @@
 This code uses Babel to transpile some *possible* features in ESNext aka decorators and bindings.
 
 ## Example code
-> src/my-element.js
+> exmaple/src/my-element.js
 
 ```js
 
-import { component, template, onAttributeChange } from '../lib/cement';
+import { component, template, onAttributeChange, select } from '../lib/cement';
 
 
 @component('my-element') // register the component
@@ -32,8 +32,9 @@ class MyElement extends HTMLElement {
 
     @onAttributeChange('prop') // handler for 'prop' attribute change
     updateProp(oldVal, newVal) {
-        const root = this.shadowRoot;
-        root.querySelector(`.prop`).innerHTML = newVal ;
+        //const root = this.shadowRoot;
+        //root.querySelector(`.prop`).innerHTML = newVal ;
+        this::select(`.prop`).innerHTML = newVal ; // select binding
     }
 
 }
