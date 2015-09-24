@@ -5,6 +5,7 @@
   "main": "dist/cement",
   "scripts": {
     "dist": "browserify -t [ babelify ] src/cement.js -o dist/cement.js",
+    "lint": "eslint --quiet src/ test/",
     "example": "browserify -t [ babelify ] example/src/my-element.js -o example/dist/my-element.js"
   },
   "author": "",
