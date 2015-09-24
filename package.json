@@ -5,7 +5,9 @@
   "main": "dist/cement",
   "scripts": {
     "dist": "browserify -t [ babelify ] src/cement.js -o dist/cement.js",
+    "dist-min": "browserify -t [ babelify ] src/cement.js | uglifyjs -m > dist/cement.min.js",
     "lint": "eslint --quiet src/ test/",
+    "build": "npm run lint && npm run dist && npm run dist-min",
     "example": "browserify -t [ babelify ] example/src/my-element.js -o example/dist/my-element.js"
   },
   "author": "",
@@ -16,6 +18,7 @@
     "babelify": "^6.3.0",
     "browserify": "^11.1.0",
     "eslint": "^1.5.0",
+    "uglify-js": "^2.4.24",
     "webcomponents.js": "^0.7.2"
   },
   "dependencies": {
