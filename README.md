@@ -55,7 +55,7 @@ This library runs on top of `webcomponents.js`. That means that browser support 
 ## Install
 
 ```
-npm i -S https://github.com/elmasse/cement
+npm i -S git+https://github.com/elmasse/cement.git
 ```
 
 ## Cement API
