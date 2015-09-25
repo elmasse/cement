@@ -4,8 +4,8 @@
   "description": "",
   "main": "dist/cement",
   "scripts": {
-    "dist": "browserify -t [ babelify ] src/cement.js -o dist/cement.js",
-    "standalone": "browserify -t [ babelify ] src/cement.js  --standalone cement | uglifyjs -m > dist/cement.min.js",
+    "dist": "babel -d dist/ src/",
+    "standalone": "browserify -t [ babelify ] src/cement.js  --standalone cement | uglifyjs -m > dist/cement.umd.js",
     "lint": "eslint --quiet src/ test/",
     "build": "npm run lint && npm run dist && npm run standalone",
     "example": "browserify -t [ babelify ] example/src/my-element.js -o example/dist/my-element.js"
