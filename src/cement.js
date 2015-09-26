@@ -9,19 +9,19 @@ import createdCallback          from './traits/created';
 
 // --- DECORATORS ----
 
-export function register (element) {
+export function register (element, options = {}) {
     return function (target) {
-        document.registerElement(element, target);
+        document.registerElement(element, Object.assign(options, {prototype: target.prototype}));
     }
 }
 
-export function component (element) {
+export function component (options) {
     return function(target) {
         traits(
             createdCallback,
             attributeChangedCallback
         )(target);
-        register(element)(target);
+        register(...options)(target);
     };
 }
 
