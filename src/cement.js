@@ -1,10 +1,12 @@
 
 import { traits } from 'traits-decorator';
 
-import { TEMPLATE, ATTR_CHANGED_MAP } from './constants';
+import { ATTR_CHANGED_MAP, TEMPLATE, LISTENERS } from './constants';
 
-import attributeChangedCallback from './traits/attributeChanged';
-import createdCallback          from './traits/created';
+import created  from './traits/created';
+import attached from './traits/attached';
+import detached from './traits/detached';
+import attributeChanged from './traits/attributeChanged'; 
 
 
 // --- DECORATORS ----
@@ -18,8 +20,10 @@ export function register (element, options = {}) {
 export function component (element, options = {}) {
     return function(target) {
         traits(
-            createdCallback,
-            attributeChangedCallback
+            created,
+            attached,
+            detached,
+            attributeChanged
         )(target);
         register(element, options)(target);
     };
@@ -43,6 +47,17 @@ export function onAttributeChange (attrName) {
             map = target[ATTR_CHANGED_MAP];
         }
         map[attrName] = name;
+    }
+}
+
+export function onEvent (eventName) {
+    return function (target, name, descriptor) {
+        let map = target[LISTENERS];
+        if (!map) {
+            Object.defineProperty(target, LISTENERS, {value: {}})
+            map = target[LISTENERS];
+        }
+        map[eventName] = name;
     }
 }
 

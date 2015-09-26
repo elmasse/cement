@@ -1,5 +1,5 @@
 
-import { component, template, onAttributeChange, select } from '../../src/cement';
+import { component, template, onAttributeChange, select, onEvent } from '../../src/cement';
 
 
 @component('my-element')
@@ -22,6 +22,12 @@ class MyElement extends HTMLElement {
 
     @onAttributeChange('prop') updateProp(oldVal, newVal) {
         this::select(`.prop`).innerHTML = newVal ;
+    }
+
+    @onEvent('click')
+    changeSpanBackgroundColor () {
+        const color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+        this::select('.prop').style.backgroundColor = color;
     }
 
 }

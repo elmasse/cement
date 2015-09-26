@@ -10,7 +10,7 @@ var _traitsDecorator = require('traits-decorator');
 
 var _constants = require('../constants');
 
-var attributeChangedCallback = _createDecoratedObject([{
+var attributeChanged = _createDecoratedObject([{
     key: 'attributeChangedCallback',
     decorators: [(0, _traitsDecorator.requires)('Symbol(ATTR_CHANGED_MAP):{Function}')],
     value: function attributeChangedCallback(attrName, oldVal, newVal) {
@@ -22,5 +22,5 @@ var attributeChangedCallback = _createDecoratedObject([{
     }
 }]);
 
-exports['default'] = attributeChangedCallback;
+exports['default'] = attributeChanged;
 module.exports = exports['default'];

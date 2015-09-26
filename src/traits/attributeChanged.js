@@ -1,7 +1,7 @@
 import { requires } from 'traits-decorator';
 import {ATTR_CHANGED_MAP} from '../constants';
 
-const attributeChangedCallback = {
+const attributeChanged = {
 
     @requires('Symbol(ATTR_CHANGED_MAP):{Function}')
     attributeChangedCallback (attrName, oldVal, newVal) {
@@ -13,4 +13,4 @@ const attributeChangedCallback = {
     }
 }
 
-export default attributeChangedCallback;
+export default attributeChanged;

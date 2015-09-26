@@ -10,16 +10,18 @@ var _traitsDecorator = require('traits-decorator');
 
 var _constants = require('../constants');
 
-var created = _createDecoratedObject([{
-    key: 'createdCallback',
-    decorators: [(0, _traitsDecorator.requires)('Symbol(TEMPLATE):{Function}')],
-    value: function createdCallback() {
+var detached = _createDecoratedObject([{
+    key: 'detachedCallback',
+    decorators: [(0, _traitsDecorator.requires)('Symbol(LISTENERS):{Function}')],
+    value: function detachedCallback() {
         var me = this,
-            template = me[_constants.TEMPLATE] || function () {};
+            listeners = me[_constants.LISTENERS];
 
-        me.createShadowRoot().innerHTML = template.call(me);
+        Object.keys(listeners).map(function (event) {
+            return me.removeEventListener(event, me[listeners[event]]);
+        });
     }
 }]);
 
-exports['default'] = created;
+exports['default'] = detached;
 module.exports = exports['default'];

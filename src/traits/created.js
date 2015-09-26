@@ -1,7 +1,7 @@
 import { requires } from 'traits-decorator';
 import {TEMPLATE} from '../constants';
 
-const createdCallback = {
+const created = {
     
     @requires('Symbol(TEMPLATE):{Function}')
     createdCallback () {
@@ -12,4 +12,4 @@ const createdCallback = {
     }    
 }
 
-export default createdCallback;
+export default created;
