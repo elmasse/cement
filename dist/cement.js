@@ -14,8 +14,6 @@ exports.select = select;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
-
 var _traitsDecorator = require('traits-decorator');
 
 var _constants = require('./constants');
@@ -38,10 +36,12 @@ function register(element) {
     };
 }
 
-function component(options) {
+function component(element) {
+    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
     return function (target) {
         (0, _traitsDecorator.traits)(_traitsCreated2['default'], _traitsAttributeChanged2['default'])(target);
-        register.apply(undefined, _toConsumableArray(options))(target);
+        register(element, options)(target);
     };
 }
 

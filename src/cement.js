@@ -15,13 +15,13 @@ export function register (element, options = {}) {
     }
 }
 
-export function component (options) {
+export function component (element, options = {}) {
     return function(target) {
         traits(
             createdCallback,
             attributeChangedCallback
         )(target);
-        register(...options)(target);
+        register(element, options)(target);
     };
 }
 
