@@ -60,10 +60,10 @@ npm i -S git+https://github.com/elmasse/cement.git
 
 ## Cement API
 
-### @register(elementName: {String})
+### @register(elementName: {String}, options: {Object})
 > Class decorator
 
-Registers the target class as a custom element using the `elementName`.
+Registers the target class as a custom element using the `elementName`. The `options` object is an _optional_ metadata describing the prototype. Usually, you need to specify it when extending from another element like form, input, etc.
 
 > Usage
 
@@ -79,10 +79,31 @@ class MyCustomElement extends HTMLElement {
 
 ```
 
-### @component(elementName: {String})
+> Extending HTMLFormElement
+
+```js
+import { register } from 'cement';
+
+@register('my-custom-element', { extends: 'form' })
+class MyCustomElement extends HTMLFormElement { 
+    createdCallback() {
+        this.createShadowRoot().innerHTML = `
+            <div>Cutom Form!</div>
+            <content></content>
+        `;
+    }
+}
+
+```
+
+
+### @component(elementName: {String}, options: {Object})
 > Class decorator
 
-Registers the target class as a custom element using the `elementName` using `@register` decorator. It also defines `createdCallback` and `attributeChangedCallback` as traits to support `@template` and `@onAttributeChange` decorators.
+Registers the target class as a custom element using the `elementName` and `options` object using `@register` decorator. 
+It also defines `createdCallback`, `attributeChangedCallback`, `attachedCallback` and `detachedCallback` as traits to support `@template`, `onEvent` and `@onAttributeChange` decorators.
+
+> **NOTE**: Since `createdCallback`, `attributeChangedCallback`, `attachedCallback` and `detachedCallback` are defined by traits you **cannot** override them. Use `@register` decorator in case you need to use any of the mentioned methods.
 
 > Usage
 
@@ -134,6 +155,27 @@ class MyCustomElement extends HTMLElement {
     @onAttributeChange('name')
     onNameChange (oldValue, newValue) { ... }
 }
+```
+
+### onEvent(eventName: {String})
+> Method decorator
+
+Adds the decorated method as a listener for the specified `eventName`.  It will add the event listener when the element is attached to the dom and remove it when detached.
+It **requires** the class to be decorated with `@component`
+
+> Usage
+
+```js
+import { component, onEvent } from 'cement';
+
+@component('my-custom-element')
+class MyCustomElement extends HTMLElement { 
+    ...
+
+    @onEvent('blur')
+    validateValue () { ... }
+}
+
 ```
 
 ### select(selector: {String})
